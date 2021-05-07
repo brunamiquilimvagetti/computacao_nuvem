@@ -1,30 +1,20 @@
-import json
-from json import JSONEncoder
+import unittest
 
+class TestStringMethods(unittest.TestCase):
 
-class Employee:
-    def __init__(self, name, salary, address):
-        self.name = name
-        self.salary = salary
-        self.address = address
+    def test_upper(self):
+        self.assertEqual('foo'.upper(), 'FOO')
 
+    def test_isupper(self):
+        self.assertTrue('FOO'.isupper())
+        self.assertFalse('Foo'.isupper())
 
-class Address:
-    def __init__(self, city, street, pin):
-        self.city = city
-        self.street = street
-        self.pin = pin
+    def test_split(self):
+        s = 'hello world'
+        self.assertEqual(s.split(), ['hello', 'world'])
+        # check that s.split fails when the separator is not a string
+        with self.assertRaises(TypeError):
+            s.split(2)
 
-
-# subclass JSONEncoder
-class EmployeeEncoder(JSONEncoder):
-        def default(self, o):
-            return o.__dict__
-
-
-address = Address("Alpharetta", "7258 Spring Street", "30004")
-employee = Employee("John", 9000, address)
-
-
-print("Printing to check how it will look like")
-print(EmployeeEncoder().encode(employee))
+if __name__ == '__main__':
+    unittest.main()
